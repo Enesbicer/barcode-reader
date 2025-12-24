@@ -21,86 +21,37 @@ class InputImage(Input):
         title = "Image"
 
 
-class OutputImage(Output):
-    name: Literal["outputImage"] = "outputImage"
-    value: Union[List[Image],Image]
-    type: str = "object"
+class Detection(Detection):
+    data: str
+    imgUID: str
 
-    @validator("type", pre=True, always=True)
-    def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
-        if isinstance(value, Image):
-            return "object"
-        elif isinstance(value, list):
-            return "list"
+
+class OutputData(Output):
+    name: Literal["outputData"] = "outputData"
+    value: List[Detection]
+    type: Literal["list"] = "list"
 
     class Config:
-        title = "Image"
+        title = "Detection"
 
 
-class KeepSideFalse(Config):
-    name: Literal["False"] = "False"
-    value: Literal[False] = False
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Disable"
 
 
-class KeepSideTrue(Config):
-    name: Literal["True"] = "True"
-    value: Literal[True] = True
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Enable"
-
-
-class KeepSideBBox(Config):
-    """
-        Rotate image without catting off sides.
-    """
-    name: Literal["KeepSide"] = "KeepSide"
-    value: Union[KeepSideTrue, KeepSideFalse]
-    type: Literal["object"] = "object"
-    field: Literal["dropdownlist"] = "dropdownlist"
-
-    class Config:
-        title = "Keep Sides"
-
-
-class Degree(Config):
-    """
-        Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
-    """
-    name: Literal["Degree"] = "Degree"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
-
-    class Config:
-        title = "Angle"
-
-
-class PackageInputs(Inputs):
+class BarcodeInputs(Inputs):
     inputImage: InputImage
 
 
-class PackageConfigs(Configs):
-    degree: Degree
-    drawBBox: KeepSideBBox
+class BarcodeConfigs(Configs):
 
 
-class PackageOutputs(Outputs):
-    outputImage: OutputImage
+
+class BarcodeOutputs(Outputs):
+    outputData: OutputData
 
 
-class PackageRequest(Request):
-    inputs: Optional[PackageInputs]
-    configs: PackageConfigs
+class BarcodeRequest(Request):
+    inputs: Optional[BarcodeInputs]
+    configs: BarcodeConfigs
 
     class Config:
         json_schema_extra = {
@@ -108,18 +59,18 @@ class PackageRequest(Request):
         }
 
 
-class PackageResponse(Response):
-    outputs: PackageOutputs
+class BarcodeResponse(Response):
+    outputs: BarcodeOutputs
 
 
-class PackageExecutor(Config):
-    name: Literal["Package"] = "Package"
-    value: Union[PackageRequest, PackageResponse]
+class BarcodeExecuter(Config):
+    name: Literal["Barcode"] = "Barcode"
+    value: Union[BarcodeRequest, BarcodeResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "Barcode"
         json_schema_extra = {
             "target": {
                 "value": 0
@@ -129,7 +80,7 @@ class PackageExecutor(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[PackageExecutor]
+    value: Union[BarcodeExecutor]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
@@ -146,5 +97,5 @@ class PackageConfigs(Configs):
 
 class PackageModel(Package):
     configs: PackageConfigs
-    type: Literal["component"] = "component"
-    name: Literal["Package"] = "Package"
+    type: Literal["capsule"] = "capsule"
+    name: Literal["Barcode"] = "Barcode"

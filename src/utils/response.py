@@ -4,10 +4,10 @@ from components.Package.src.models.PackageModel import PackageModel, PackageConf
 
 
 def build_response(context):
-    outputImage = OutputImage(value=context.image)
-    Outputs = PackageOutputs(outputImage=outputImage)
-    packageResponse = PackageResponse(outputs=Outputs)
-    packageExecutor = PackageExecutor(value=packageResponse)
+    outputData = OutputData(value=context.detection)
+    Outputs = BarcodeOutputs(outputImage=outputData)
+    packageResponse = BarcodeResponse(outputs=Outputs)
+    packageExecutor = BarcodeExecutor(value=packageResponse)
     executor = ConfigExecutor(value=packageExecutor)
     packageConfigs = PackageConfigs(executor=executor)
     package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
