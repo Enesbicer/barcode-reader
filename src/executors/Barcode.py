@@ -11,9 +11,9 @@ from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.capsule import Capsule
 from sdks.novavision.src.base.model import BoundingBox
 from sdks.novavision.src.helper.executor import Executor
-from capsules.QRDetection.src.utils.response import build_response_qreader
-from capsules.QRDetection.src.models.PackageModel import PackageModel, Detection
-from capsules.QRDetection.src.configs.config import ALLOWED_BARCODES
+from capsules.Barcode.src.utils.response import build_response_qreader
+from capsules.Barcode.src.models.PackageModel import PackageModel, Detection
+from capsules.Barcode.src.configs.config import ALLOWED_BARCODES
 
 class BarcodeReader(Capsule):
     def __init__(self, request, bootstrap):
