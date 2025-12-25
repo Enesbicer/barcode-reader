@@ -15,7 +15,7 @@ from capsules.BarcodeReader.src.models.PackageModel import PackageModel, Detecti
 from capsules.BarcodeReader.src.configs.config import ALLOWED_BARCODES
 
 
-class BarcodeReader(Capsule):
+class Pyzbar(Capsule):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**self.request.data)
