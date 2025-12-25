@@ -57,7 +57,7 @@ class PyzbarResponse(Response):
     outputs: PyzbarOutputs
 
 
-class PyzbarExecuter(Config):
+class PyzbarExecutor(Config):
     name: Literal["Pyzbar"] = "Pyzbar"
     value: Union[PyzbarRequest, PyzbarResponse]
     type: Literal["object"] = "object"
