@@ -35,17 +35,17 @@ class OutputData(Output):
         title = "Detection"
 
 
-class BarcodeInputs(Inputs):
+class PyzbarInputs(Inputs):
     inputImage: InputImage
 
 
-class BarcodeOutputs(Outputs):
+class PyzbarOutputs(Outputs):
     outputData: OutputData
 
 
-class BarcodeRequest(Request):
-    inputs: Optional[BarcodeInputs]
-    configs: BarcodeConfigs
+class PyzbarRequest(Request):
+    inputs: Optional[PyzbarInputs]
+
 
     class Config:
         json_schema_extra = {
@@ -53,18 +53,18 @@ class BarcodeRequest(Request):
         }
 
 
-class BarcodeResponse(Response):
-    outputs: BarcodeOutputs
+class PyzbarResponse(Response):
+    outputs: PyzbarOutputs
 
 
-class BarcodeExecuter(Config):
-    name: Literal["Barcode"] = "Barcode"
-    value: Union[BarcodeRequest, BarcodeResponse]
+class PyzbarExecuter(Config):
+    name: Literal["Pyzbar"] = "Pyzbar"
+    value: Union[PyzbarRequest, PyzbarResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Barcode"
+        title = "Pyzbar"
         json_schema_extra = {
             "target": {
                 "value": 0
@@ -74,7 +74,7 @@ class BarcodeExecuter(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[BarcodeExecutor]
+    value: Union[PyzbarExecutor]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
@@ -92,4 +92,4 @@ class PackageConfigs(Configs):
 class PackageModel(Package):
     configs: PackageConfigs
     type: Literal["capsule"] = "capsule"
-    name: Literal["Barcode"] = "Barcode"
+    name: Literal["BarcodeReader"] = "BarcodeReader"

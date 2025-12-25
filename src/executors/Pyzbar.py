@@ -10,9 +10,9 @@ from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.capsule import Capsule
 from sdks.novavision.src.base.model import BoundingBox
 from sdks.novavision.src.helper.executor import Executor
-from capsules.Barcode.src.utils.response import build_response_qreader
-from capsules.Barcode.src.models.PackageModel import PackageModel, Detection
-from capsules.Barcode.src.configs.config import ALLOWED_BARCODES
+from capsules.BarcodeReader.src.utils.response import build_response_qreader
+from capsules.BarcodeReader.src.models.PackageModel import PackageModel, Detection
+from capsules.BarcodeReader.src.configs.config import ALLOWED_BARCODES
 
 
 class BarcodeReader(Capsule):
@@ -26,22 +26,11 @@ class BarcodeReader(Capsule):
 
     def process_detections(self, image_array: np.ndarray, img_uid: str):
 
-        if image_array.dtype != np.uint8:
-            image_array = image_array.astype(np.uint8)
-
+        if image_array.dtype != np.uint8: image_array = image_array.astype(np.uint8)
         image_gray = cv2.cvtColor(image_array, cv2.COLOR_BGR2GRAY)
-
-        # Mapping yapmaya gerek kalmadı, config'den gelen listeyi doğrudan veriyoruz.
-        # Eğer config boş gelirse veya None ise varsayılan olarak boş liste döneriz.
-        if not ALLOWED_BARCODES:
-            return []
-
-        # symbols parametresine doğrudan config listesini veriyoruz
+        if not ALLOWED_BARCODES: return []
         decoded_objects = pyzbar.decode(image_gray, symbols=ALLOWED_BARCODES)
-
-        if not decoded_objects:
-            return []
-
+        if not decoded_objects: return []
         detection_list = []
 
         for obj in decoded_objects:
