@@ -10,7 +10,7 @@ from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.capsule import Capsule
 from sdks.novavision.src.base.model import BoundingBox
 from sdks.novavision.src.helper.executor import Executor
-from capsules.BarcodeReader.src.utils.response import build_response_qreader
+from capsules.BarcodeReader.src.utils.response import build_response
 from capsules.BarcodeReader.src.models.PackageModel import PackageModel, Detection
 from capsules.BarcodeReader.src.configs.config import ALLOWED_BARCODES
 
