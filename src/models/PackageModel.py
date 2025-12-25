@@ -35,14 +35,8 @@ class OutputData(Output):
         title = "Detection"
 
 
-
-
 class BarcodeInputs(Inputs):
     inputImage: InputImage
-
-
-class BarcodeConfigs(Configs):
-
 
 
 class BarcodeOutputs(Outputs):
