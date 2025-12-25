@@ -19,6 +19,7 @@ class BarcodeReader(Capsule):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**self.request.data)
+        self.images = self.request.get_param("inputImage")
 
     @staticmethod
     def bootstrap(config: dict) -> dict:
@@ -61,9 +62,9 @@ class BarcodeReader(Capsule):
         return detection_list
 
     def run(self):
-        image_obj = Image.get_frame(img=self.request.get_param("inputImage"), redis_db=self.redis_db)
+        image_obj = Image.get_frame(img=self.images, redis_db=self.redis_db)
         self.detection = self.process_detections(np.array(image_obj.value), image_obj.uID)
-        return build_response_qreader(context=self)
+        return build_response(context=self)
 
 
 if __name__ == "__main__":
